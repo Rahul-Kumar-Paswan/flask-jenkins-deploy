@@ -1,0 +1,9 @@
+__pycache__
+.venv
+flask_app.egg-info
+dist/
+build/
+manifests/
+.dockerignore
+docker-compose.yaml
+my_config.py
