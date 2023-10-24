@@ -5,6 +5,6 @@ dist/
 build/
 manifests/
 .dockerignore
-docker-compose.yaml
+# docker-compose.yaml
 my_config.py
 # my-helm-chart/
