@@ -88,9 +88,16 @@ pipeline {
                 script {
                     // Clean up any existing Docker Compose file
                     sh 'rm -f docker-compose.yaml'
-                    
-                    // Clone your Docker Compose file from GitHub
-                    sh 'git clone https://github.com/Rahul-Kumar-Paswan/flask-jenkins.git /tmp/docker-compose-repo'
+
+                    // Check if the repository already exists, if so, update it
+                    if (fileExists('/tmp/docker-compose-repo')) {
+                        dir('/tmp/docker-compose-repo') {
+                            sh 'git pull'
+                        }
+                    } else {
+                        // Clone the repository if it doesn't exist
+                        sh 'git clone https://github.com/Rahul-Kumar-Paswan/flask-jenkins.git /tmp/docker-compose-repo'
+                    }
                     
                     // Copy the Docker Compose file to your workspace
                     sh 'cp /tmp/docker-compose-repo/docker-compose.yaml .'
