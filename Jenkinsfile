@@ -75,6 +75,17 @@ pipeline {
       }
     }
 
+<<<<<<< HEAD
+=======
+    // stage("deploy") {
+    //   steps {
+    //     script {
+    //       echo "Deploy to EC2........"
+    //     }
+    //   }
+    // }
+
+>>>>>>> 461affd (setting everything)
     stage("deploy") {
       steps {
         script {
