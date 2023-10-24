@@ -83,11 +83,27 @@ pipeline {
     //   }
     // }
 
+    stage('Retrieve Docker Compose File') {
+            steps {
+                script {
+                    // Clean up any existing Docker Compose file
+                    sh 'rm -f docker-compose.yml'
+                    
+                    // Clone your Docker Compose file from GitHub
+                    sh 'git clone https://github.com/Rahul-Kumar-Paswan/flask-jenkins.git /tmp/docker-compose-repo'
+                    
+                    // Copy the Docker Compose file to your workspace
+                    sh 'cp /tmp/docker-compose-repo/docker-compose.yml .'
+                }
+            }
+        }
+
     stage("deploy") {
       steps {
         script {
           echo "Deploy to LOCALHOST........"
-          sh 'docker-compose -f docker-compose up --build -d'
+          sh 'docker-compose pull'
+          sh 'docker-compose up -d'
         }
       }
     }
