@@ -87,13 +87,13 @@ pipeline {
             steps {
                 script {
                     // Clean up any existing Docker Compose file
-                    sh 'rm -f docker-compose.yml'
+                    sh 'rm -f docker-compose.yaml'
                     
                     // Clone your Docker Compose file from GitHub
                     sh 'git clone https://github.com/Rahul-Kumar-Paswan/flask-jenkins.git /tmp/docker-compose-repo'
                     
                     // Copy the Docker Compose file to your workspace
-                    sh 'cp /tmp/docker-compose-repo/docker-compose.yml .'
+                    sh 'cp /tmp/docker-compose-repo/docker-compose.yaml .'
                 }
             }
         }
