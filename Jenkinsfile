@@ -75,8 +75,6 @@ pipeline {
       }
     }
 
-<<<<<<< HEAD
-=======
     // stage("deploy") {
     //   steps {
     //     script {
@@ -85,11 +83,11 @@ pipeline {
     //   }
     // }
 
->>>>>>> 461affd (setting everything)
     stage("deploy") {
       steps {
         script {
-          echo "Deploy to EC2........"
+          echo "Deploy to LOCALHOST........"
+          sh 'docker-compose -f docker-compose up --build -d'
         }
       }
     }
