@@ -7,3 +7,4 @@ manifests/
 .dockerignore
 docker-compose.yaml
 my_config.py
+# my-helm-chart/
