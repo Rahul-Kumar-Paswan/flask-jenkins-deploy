@@ -10,7 +10,7 @@ pipeline {
   agent any
 
   environment {
-    DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"  // Set the same image name and tag as in the build pipeline
+    DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app"  // Set the same image name and tag as in the build pipeline
   }
   
   stages{
@@ -83,7 +83,7 @@ pipeline {
       steps {
         script {
           echo "Deploy to LOCALHOST........"
-          echo "Deploy to LOCALHOST........ ${DEPLOY_IMAGE_NAME}"
+          echo "Deploy to LOCALHOST........ ${DEPLOY_IMAGE_NAME}:${IMAGE_NAME}"
           sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
           sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
           sh "docker-compose up -d"
