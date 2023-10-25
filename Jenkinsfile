@@ -85,8 +85,9 @@ pipeline {
           echo "Deploy to LOCALHOST........"
           def DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"
           echo "Deploy to new image........ ${DEPLOY_IMAGE_NAME}"
-          sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
-          sh "docker-compose up -d"
+          // sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
+          sh "DEPLOY_IMAGE_NAME=${DEPLOY_IMAGE_NAME} docker-compose up -d"
+          // sh "docker-compose up -d"
         }
       }
     }
