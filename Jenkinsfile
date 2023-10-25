@@ -102,7 +102,7 @@ pipeline {
         sh 'git add .'
         sh 'git commit -m "cli: version updates"'
         withCredentials([gitUsernamePassword(credentialsId: 'git-token', gitToolName: 'Default')]) {
-          sh 'git remote set-url origin https://github.com/Rahul-Kumar-Paswan/flask-jenkins.git'
+          sh 'git remote set-url origin https://github.com/Rahul-Kumar-Paswan/flask-jenkins-deploy.git'
           sh "git push origin HEAD:main"
         }
       }
