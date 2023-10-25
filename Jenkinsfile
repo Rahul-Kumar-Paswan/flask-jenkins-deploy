@@ -65,35 +65,17 @@ pipeline {
     stage('Build Image') {
       steps {
         echo "hello"
-        /* sh "docker build -t flask_app:${IMAGE_NAME} ."
-        sh "docker tag flask_app:${IMAGE_NAME} rahulkumarpaswan/flask_app:${IMAGE_NAME}"
-        sh "docker push rahulkumarpaswan/flask_app:${IMAGE_NAME}" */
-
         buildImage "flask_app:${IMAGE_NAME}"
         dockerLogin()
         dockerPush "flask_app:${IMAGE_NAME}"
       }
     }
   
-    // stage('Deploy with Docker Compose') {
-    //   steps {
-    //     script {
-    //       echo "Deploy to LOCALHOST........"
-    //       def DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"
-    //       echo "Deploying new image........ ${DEPLOY_IMAGE_NAME}"
-    //       sh "DEPLOY_IMAGE_NAME=${DEPLOY_IMAGE_NAME} docker-compose up -d"
-    //     }
-    //   }
-    // }
 
     stage('Deploy with Docker Compose and Groovy') {
       steps {
         script {
           echo "Deploy to LOCALHOST........"
-          // def DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"
-          // deployApp "${DEPLOY_IMAGE_NAME}"
-          // echo "Deploying new image........ ${DEPLOY_IMAGE_NAME}"
-
           deployApp "flask_app:${IMAGE_NAME}"
           echo "Deploying new image........ "
         }
