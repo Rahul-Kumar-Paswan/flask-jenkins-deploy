@@ -8,10 +8,6 @@ library identifier : 'jenkins-shared-library@main',retriever:modernSCM([
 
 pipeline {
   agent any
-
-  // environment {
-  //   DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app"  // Set the same image name and tag as in the build pipeline
-  // }
   
   stages{
 
@@ -79,15 +75,26 @@ pipeline {
       }
     }
   
-    stage('Deploy with Docker Compose') {
+    // stage('Deploy with Docker Compose') {
+    //   steps {
+    //     script {
+    //       echo "Deploy to LOCALHOST........"
+    //       def DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"
+    //       echo "Deploying new image........ ${DEPLOY_IMAGE_NAME}"
+    //       sh "DEPLOY_IMAGE_NAME=${DEPLOY_IMAGE_NAME} docker-compose up -d"
+    //     }
+    //   }
+    // }
+
+    stage('Deploy with Docker Compose and Groovy') {
       steps {
         script {
           echo "Deploy to LOCALHOST........"
           def DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"
-          echo "Deploy to new image........ ${DEPLOY_IMAGE_NAME}"
-          // sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
-          sh "DEPLOY_IMAGE_NAME=${DEPLOY_IMAGE_NAME} docker-compose up -d"
-          // sh "docker-compose up -d"
+          deployApp "${DEPLOY_IMAGE_NAME}"
+          // deployApp "flask_app:${DEPLOY_IMAGE_NAME}"
+          echo "Deploying new image........ ${DEPLOY_IMAGE_NAME}"
+          // sh "DEPLOY_IMAGE_NAME=${DEPLOY_IMAGE_NAME} docker-compose up -d"
         }
       }
     }
