@@ -8,6 +8,10 @@ library identifier : 'jenkins-shared-library@main',retriever:modernSCM([
 
 pipeline {
   agent any
+
+  environment {
+    DEPLOY_IMAGE_NAME = "rahulkumarpaswan/flask_app:${IMAGE_NAME}"  // Set the same image name and tag as in the build pipeline
+  }
   
   stages{
 
@@ -74,60 +78,16 @@ pipeline {
         dockerPush "flask_app:${IMAGE_NAME}"
       }
     }
-
-    // stage("deploy") {
-    //   steps {
-    //     script {
-    //       echo "Deploy to EC2........"
-    //     }
-    //   }
-    // }
-
-    stage('Retrieve Docker Compose File') {
-            steps {
-                script {
-                    // Clean up any existing Docker Compose file
-                    sh 'rm -f docker-compose.yaml'
-
-                    // Check if the repository already exists, if so, update it
-                    if (fileExists('/tmp/docker-compose-repo')) {
-                        dir('/tmp/docker-compose-repo') {
-                            sh 'git pull'
-                        }
-                    } else {
-                        // Clone the repository if it doesn't exist
-                        sh 'git clone https://github.com/Rahul-Kumar-Paswan/flask-jenkins.git /tmp/docker-compose-repo'
-                    }
-                    
-                    // Copy the Docker Compose file to your workspace
-                    sh 'cp /tmp/docker-compose-repo/docker-compose.yaml .'
-                }
-            }
-        }
-
-    stage("deploy") {
+  
+    stage('Deploy with Docker Compose') {
       steps {
         script {
           echo "Deploy to LOCALHOST........"
-          sh 'docker-compose pull'
-          sh 'docker-compose up -d'
+          sh "sed -i 's|\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
+          sh "docker-compose up -d"
         }
       }
     }
-
-
-    /* stage('Deploy') {
-      steps {
-        script {
-          echo "Deploy to EC2........."
-            def dockerCmd = "docker run -d --name rahul-project -p 3000:3000 rahulkumarpaswan/flask_app:${IMAGE_NAME}"
-            sshagent(['ec2-user-Rahul']) {
-                sh "ssh -o StrictHostKeyChecking=no ec2-user@13.232.90.226 ${dockerCmd}"//add ip address of EC2-docker instance 
-            }
-        }
-      }
-    } */
-
 
     
     stage("Git Commit Update") {
