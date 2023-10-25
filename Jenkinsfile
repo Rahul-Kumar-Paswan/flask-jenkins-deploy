@@ -84,8 +84,7 @@ pipeline {
         script {
           echo "Deploy to LOCALHOST........"
           echo "Deploy to LOCALHOST........ ${DEPLOY_IMAGE_NAME}:${IMAGE_NAME}"
-          sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
-          sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}|' docker-compose.yaml"
+          sh "sed -i 's|\\\$\\{DEPLOY_IMAGE_NAME\\}|${DEPLOY_IMAGE_NAME}:${IMAGE_NAME}|' docker-compose.yaml"
           sh "docker-compose up -d"
         }
       }
